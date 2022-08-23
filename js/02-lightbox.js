@@ -20,11 +20,9 @@ function createImgCollection(galleryItems) {
     })
     .join('');
 }
-galleryEL.addEventListener(`click`, SimpleLightbox);
+// galleryEL.addEventListener(`click`, SimpleLightbox);
 
-let gallery = new SimpleLightbox('.gallery a');
-
-gallery.on('show.simplelightbox', {
+let gallery = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
   captionDelay: 250,
 });
