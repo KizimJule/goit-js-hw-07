@@ -40,6 +40,7 @@ function openModalWind(evt) {
 
   gallery.addEventListener(`keydown`, closeModalWind);
   function closeModalWind(evt) {
+    gallery.removeEventListener(`keydown`, closeModalWind);
     if (evt.code === 'Escape') {
       instance.close();
     }
