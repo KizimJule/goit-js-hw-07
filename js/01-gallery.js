@@ -31,16 +31,39 @@ function openModalWind(evt) {
   if (evt.target.nodeName !== 'IMG') {
     return;
   }
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
     <div class="modal">
     <img src="${evt.target.dataset.source}" width="700" height="500">
     </div>
-	`);
+	`,
+    {
+      onShow: instance => {
+        console.log('add listener');
+        document.addEventListener(`keydown`, closeModalWind);
+
+        // addKeydownListener;
+        // closeModalWind(evt);
+      },
+      onClose: instance => {
+        document.removeEventListener(`keydown`, closeModalWind);
+        // removeKeydownListener;
+      },
+    }
+  );
   instance.show();
 
-  gallery.addEventListener(`keydown`, closeModalWind);
+  // onShow: instance => {
+  //   closeModalWind(evt);
+  // };
+  // onClose: instance => {
+  //   removeKeydownListener;
+  // };
+
+  // document.addEventListener(`keydown`, closeModalWind);
+  //
   function closeModalWind(evt) {
-    gallery.removeEventListener(`keydown`, closeModalWind);
+    // document.removeEventListener(`keydown`, closeModalWind);
     if (evt.code === 'Escape') {
       instance.close();
     }
