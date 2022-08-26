@@ -26,46 +26,35 @@ function createImgCollection(galleryItems) {
     .join('');
 }
 gallery.addEventListener(`click`, openModalWind);
+const instance = basicLightbox.create(
+  `
+    <div class="modal">
+    <img src="" width="700" height="500">
+    </div>
+	`,
+  {
+    onShow: () => {
+      document.addEventListener(`keydown`, closeModalWind);
+    },
+
+    onClose: () => {
+      document.removeEventListener(`keydown`, closeModalWind);
+    },
+  }
+);
+
 function openModalWind(evt) {
   evt.preventDefault();
   if (evt.target.nodeName !== 'IMG') {
     return;
   }
-  const instance = basicLightbox.create(
-    `
-    <div class="modal">
-    <img src="${evt.target.dataset.source}" width="700" height="500">
-    </div>
-	`,
-    {
-      onShow: instance => {
-        console.log('add listener');
-        document.addEventListener(`keydown`, closeModalWind);
-
-        // addKeydownListener;
-        // closeModalWind(evt);
-      },
-      onClose: instance => {
-        document.removeEventListener(`keydown`, closeModalWind);
-        // removeKeydownListener;
-      },
-    }
-  );
+  instance.element().querySelector('img').src = evt.target.dataset.source;
   instance.show();
+}
 
-  // onShow: instance => {
-  //   closeModalWind(evt);
-  // };
-  // onClose: instance => {
-  //   removeKeydownListener;
-  // };
-
-  // document.addEventListener(`keydown`, closeModalWind);
-  //
-  function closeModalWind(evt) {
-    // document.removeEventListener(`keydown`, closeModalWind);
-    if (evt.code === 'Escape') {
-      instance.close();
-    }
+function closeModalWind(evt) {
+  if (evt.key === 'Escape') {
+    instance.close();
+    return;
   }
 }
